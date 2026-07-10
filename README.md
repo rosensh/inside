@@ -1,18 +1,20 @@
 # INSIDE: LLM Student Simulators That Reason Behind Their Actions
+
 <p align="center">
   <img src="logo/inside-logo.jpg" alt="INSIDE logo" width="240">
 </p>
 
 ### Authors: Rose Niousha, Minwoo Kang, Narges Norouzi
+
 Department of Electrical Engineering and Computer Sciences  
 University of California, Berkeley  
 `{rose.n, minwoo_kang, norouzi}@berkeley.edu`  
 (Accepted at COLM 2026)
 
 
-**TL;DR.** LLM-based simulators can reproduce observable student actions while missing the reasoning behind them. INSIDE (Internal Student Dialogue) fine-tunes LLMs not only to act like students, but also to think like them, by generating internal dialogue grounded in Bloom's Taxonomy across cognitive, affective, and action dimensions before producing the next student code submission. INSIDE improves simulation fidelity by better matching real student code generation and improves reasoning alignment, reaching up to 57.9% alignment compared to prompting baselines.
+**TL;DR.** LLM-based simulators can reproduce observable student actions while missing the reasoning behind them. INSIDE (Internal Student Dialogue) fine-tunes LLMs not only to act like students, but also to think like them, by generating internal dialogue grounded in Bloom's Taxonomy before producing the next student action in the programming education context. INSIDE improves simulation fidelity by better matching real student code generation and improves reasoning alignment, reaching up to 57.9% alignment compared to baselines.
 
-If you are working on student simulation for intelligent tutoring systems, AI tutor evaluation, or user simulation more broadly, this repo provides the pipeline we used once student trajectory data is available: generate internal dialogue traces, fine-tune student simulators, generate synthetic student submissions, and evaluate action fidelity and reasoning alignment.
+If you are working on student simulation for intelligent tutoring systems, AI tutor evaluation, or user simulation more broadly, this repo provides a pipeline for generating retrospective reasoning traces, training student simulators, generating synthetic student submissions, and evaluating action fidelity and reasoning alignment.
 
 
 ## Start Here
@@ -30,8 +32,8 @@ The intended workflow is:
 ```text
 data_examples/            Synthetic data-format examples
 internal_dialogue/        Retrospective think-trace generation
-fine_tuning/              LoRA/SFT training
-data_generation/          Local, API, and OpenAI-compatible generation
+fine_tuning/              SFT training
+data_generation/          Local, API, and vLLM compatible generation
 eval/fidelity_eval/       Code formatting, static metrics, optional doctest grading
 eval/think_eval/          LLM-judge think-alignment evaluation
 ```
@@ -52,7 +54,7 @@ export OPENAI_API_KEY="..."
 export OPENAI_BASE_URL="https://api.openai.com/v1"
 ```
 
-The paper used GPT-family models for teacher trace generation and LLM judging. You can use OpenAI models, an OpenAI-compatible endpoint, or another provider of your choice by adapting the API client/config.
+The paper used GPT-family models for teacher trace generation and LLM judge. You can use other providers of your choice by adapting the API client/config.
 
 ## 1. Prepare Data
 
@@ -67,19 +69,19 @@ Each training row has:
 - `INPUT`: problem text, skeleton code, prior submissions, prior tutor feedback, and metadata
 - `OUTPUT`: the next student submission
 
-For INSIDE training, `OUTPUT` starts with a lowercase think trace:
+For INSIDE training, `OUTPUT` starts with a think trace:
 
 ```text
 <think>
 ...
 </think>
 
-student code here
+student next submission
 ```
 
 ## 2. Generate Internal Dialogue
 
-If your data has observed next submissions but no think traces, generate retrospective traces:
+Generate retrospective think traces:
 
 ```bash
 python internal_dialogue/main.py \
@@ -120,7 +122,7 @@ python data_generation/generate.py \
   --config data_generation/configs/local_exp2.example.json
 ```
 
-Prompting baselines from the paper used GPT models, but you may substitute any provider/model that supports the same chat-completion style interface:
+For API prompting baselines:
 
 ```bash
 # exp2_1: standard CoT
@@ -130,6 +132,18 @@ python data_generation/generate.py \
 # exp2_2: Bloom-inspired CoT
 python data_generation/generate.py \
   --config data_generation/configs/api_exp2_2_bloomcot.example.json
+```
+
+The same prompting baselines can also run against a vLLM server by setting `api_base` and `model_id` in the vLLM example configs:
+
+```bash
+# exp2_1: standard CoT via vLLM
+python data_generation/generate.py \
+  --config data_generation/configs/vllm_exp2_1_cot.example.json
+
+# exp2_2: Bloom-inspired CoT via vLLM
+python data_generation/generate.py \
+  --config data_generation/configs/vllm_exp2_2_bloomcot.example.json
 ```
 
 Generation outputs include `output_synthetic`, `output_gt`, and copied metadata.
@@ -177,7 +191,7 @@ The main think-alignment score is `think_alignment`: the fraction of synthetic-t
 
 ## Privacy
 
-This release intentionally excludes private student data. To reproduce the full experiments, use your own consented student interaction data in the example schema.
+This release intentionally excludes private student data to comply with privacy and IRB constraints. To reproduce the full experiments, use your own consented student interaction data in the example schema.
 
 ## License
 

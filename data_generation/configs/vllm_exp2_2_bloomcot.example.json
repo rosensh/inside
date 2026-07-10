@@ -1,0 +1,16 @@
+{
+  "experiment_name": "exp2_2",
+  "model_type": "vllm",
+  "model_id": "your-vllm-model-id",
+  "api_base": "http://localhost:8000/v1",
+  "input_data_path": "data_examples/train_exp1_synthetic.jsonl",
+  "output_data_path": "outputs/generation_exp2_2_bloomcot_vllm.jsonl",
+  "prompt_template": "nft",
+  "system_prompt": "You are simulating a student taking an introduction to Python programming course.",
+  "max_new_tokens": 1024,
+  "temperature": 0.0,
+  "top_p": 1.0,
+  "top_k": 50,
+  "min_p": 0.0,
+  "enable_thinking": false
+}
