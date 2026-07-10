@@ -1,6 +1,6 @@
 # INSIDE: Internal Student Dialogue
 
-![INSIDE logo](logo/inside-logo.jpg)
+<img src="logo/inside-logo.jpg" alt="INSIDE logo" width="240">
 
 **TL;DR.** LLM-based simulators can reproduce observable student actions while missing the reasoning behind them. INSIDE (Internal Student Dialogue) fine-tunes LLMs not only to act like students, but also to think like them, by generating internal dialogue grounded in Bloom's Taxonomy across cognitive, affective, and action dimensions before producing the next student code submission. INSIDE improves simulation fidelity by better matching real student code generation and improves reasoning alignment, reaching up to 57.9% alignment compared to prompting baselines.
 
@@ -13,7 +13,7 @@ The intended workflow is:
 
 1. Prepare your student trajectory data in the format shown in `data_examples/`.
 2. Generate internal dialogue traces with `internal_dialogue/`.
-3. Fine-tune LoRA student simulators with `fine_tuning/`.
+3. Fine-tune student simulators with `fine_tuning/`.
 4. Generate model outputs with `data_generation/`.
 5. Run action-fidelity and think-alignment evaluations with `eval/`.
 
@@ -23,7 +23,7 @@ The intended workflow is:
 data_examples/            Synthetic data-format examples
 internal_dialogue/        Retrospective think-trace generation
 fine_tuning/              LoRA/SFT training
-data_generation/          Local, API, and vLLM generation
+data_generation/          Local, API, and OpenAI-compatible generation
 eval/fidelity_eval/       Code formatting, static metrics, optional doctest grading
 eval/think_eval/          LLM-judge think-alignment evaluation
 ```
@@ -52,7 +52,7 @@ Start from the synthetic examples:
 
 - `data_examples/train_exp1_synthetic.jsonl`: code-only target for Experiment 1
 - `data_examples/train_exp2_synthetic.jsonl`: `<think>...</think>` plus code target for INSIDE
-- `data_examples/generation_synthetic.jsonl`: example formatted model output
+- `data_examples/generation_synthetic.jsonl`: example model output before evaluation formatting
 
 Each training row has:
 
@@ -97,7 +97,7 @@ python fine_tuning/fine_tune.py \
   --experiment_name exp2 \
   --dataset_file data_examples/train_exp2_synthetic.jsonl \
   --model_name Qwen/Qwen2.5-Coder-7B \
-  --output_dir outputs/qwen-inside-lora \
+  --output_dir outputs/inside-lora \
   --report_to none
 ```
 
@@ -177,4 +177,4 @@ This code is released under the MIT License. The license applies to the released
 
 ## Citation
 
-TODO
+Citation information will be added when the paper metadata is finalized.

@@ -40,7 +40,7 @@ Reflect on the cognitive, affective, and action states above, then write the stu
 
 The monologue must organically reflect all three states. If the student makes an incorrect edit, put the misconception front and center — it should feel completely obvious and correct to them, invisibly driving the wrong code. If the student makes a correct edit, show what clicked.
 
-Voice: messy, informal, mid-thought. May include "wait...", false starts, or half-convincing themselves of something wrong. Remembe you are a novice novice student learning to code for the first time, not an expert analyzing the problem with perfect clarity. 
+Voice: messy, informal, mid-thought. May include "wait...", false starts, or half-convincing themselves of something wrong. Remember you are a novice student learning to code for the first time, not an expert analyzing the problem with perfect clarity.
 Length: 2–4 sentences.
 </think>
 
