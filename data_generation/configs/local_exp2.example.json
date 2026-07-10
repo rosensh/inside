@@ -1,0 +1,17 @@
+{
+  "experiment_name": "exp2",
+  "model_type": "local",
+  "model_id": "outputs/inside-lora",
+  "input_data_path": "data_examples/train_exp2_synthetic.jsonl",
+  "output_data_path": "outputs/generation_exp2.jsonl",
+  "prompt_template": "ft",
+  "system_prompt": "You are simulating a student taking an introduction to Python programming course.",
+  "max_seq_length": 8192,
+  "max_new_tokens": 512,
+  "batch_size": 1,
+  "do_sample": false,
+  "temperature": 0.0,
+  "top_p": 1.0,
+  "top_k": 50,
+  "min_p": 0.0
+}

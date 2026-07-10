@@ -1,0 +1,7 @@
+{
+  "api_base": "",
+  "model": "gpt-5-mini",
+  "api_key": "",
+  "reasoning_effort": "low",
+  "max_tokens": 2048
+}

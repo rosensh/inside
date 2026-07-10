@@ -1,0 +1,15 @@
+{
+  "experiment_name": "exp2_2",
+  "model_type": "api",
+  "model_id": "gpt-5",
+  "api_base": "",
+  "api_key": "",
+  "input_data_path": "data_examples/train_exp1_synthetic.jsonl",
+  "output_data_path": "outputs/generation_exp2_2_bloomcot.jsonl",
+  "prompt_template": "nft",
+  "system_prompt": "You are simulating a student taking an introduction to Python programming course.",
+  "max_new_tokens": 1024,
+  "temperature": 0.0,
+  "top_p": 1.0,
+  "reasoning_effort": "minimal"
+}

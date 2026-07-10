@@ -1,0 +1,12 @@
+accelerate
+datasets
+litellm
+openai
+pandas
+peft
+pycodestyle
+python-dotenv
+torch
+tqdm
+transformers
+wandb

@@ -1,0 +1,7 @@
+{
+  "api_base": "",
+  "model": "gpt-5",
+  "api_key": "",
+  "reasoning_effort": "minimal",
+  "max_completion_tokens": 4096
+}
