@@ -1,13 +1,11 @@
-# INSIDE: LLM Student Simulators That Reason Behind Their Actions
+# Internal Student Dialogue (INSIDE)
 
 <p align="center">
   <img src="logo/inside-logo.jpg" alt="INSIDE logo" width="240">
 </p>
 
+### Paper Title: INSIDE: LLM Student Simulators That Reason Behind Their Actions
 ### Authors: Rose Niousha, Minwoo Kang, Narges Norouzi
-
-Department of Electrical Engineering and Computer Sciences  
-University of California, Berkeley  
 `{rose.n, minwoo_kang, norouzi}@berkeley.edu`  
 (Accepted at COLM 2026)
 
