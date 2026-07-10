@@ -1,6 +1,6 @@
 # INSIDE: Internal Student Dialogue
 
-![INSIDE logo placeholder](logo/inside-logo.png)
+![INSIDE logo](logo/inside-logo.jpg)
 
 **TL;DR.** LLM-based simulators can reproduce observable student actions while missing the reasoning behind them. INSIDE (Internal Student Dialogue) fine-tunes LLMs not only to act like students, but also to think like them, by generating internal dialogue grounded in Bloom's Taxonomy across cognitive, affective, and action dimensions before producing the next student code submission. INSIDE improves simulation fidelity by better matching real student code generation and improves reasoning alignment, reaching up to 57.9% alignment compared to prompting baselines.
 
