@@ -197,4 +197,11 @@ This code is released under the MIT License. The license applies to the released
 
 ## Citation
 
-Citation information will be added when the paper metadata is finalized.
+```bibtex
+@inproceedings{niousha2026inside,
+  title     = {{INSIDE} the Student's Mind: Jointly Modeling Latent Reasoning and Action in {LLM} Student Simulators},
+  author    = {Niousha, Rose and Kang, Minwoo and Norouzi, Narges},
+  booktitle = {Conference on Language Modeling (COLM)},
+  year      = {2026}
+}
+```
