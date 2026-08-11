@@ -1,16 +1,12 @@
-<p align="center">
-  <img src="logo/inside-logo.pdf" alt="INSIDE logo" width="240">
-</p>
-
 <h1 align="center">INSIDE the Student's Mind</h1>
 <h3 align="center">Jointly Modeling Latent Reasoning and Action in LLM Student Simulators</h3>
 
+<h4 align="center">Rose Niousha &nbsp;·&nbsp; Minwoo Kang &nbsp;·&nbsp; Narges Norouzi</h4>
+
 <p align="center">
-  Rose Niousha, Minwoo Kang, Narges Norouzi
+  <sub>Department of Electrical Engineering and Computer Sciences, University of California, Berkeley</sub>
   <br>
-  Department of Electrical Engineering and Computer Sciences, UC Berkeley
-  <br>
-  <code>{rose.n, minwoo_kang, norouzi}@berkeley.edu</code>
+  <sub><code>{rose.n, minwoo_kang, norouzi}@berkeley.edu</code></sub>
 </p>
 
 <p align="center">
@@ -20,6 +16,10 @@
 </p>
 
 ---
+
+<p align="center">
+  <img src="logo/inside-logo.png" alt="INSIDE overview: a student's prior attempt and tutor feedback are turned into an internal dialogue, which conditions the next code submission" width="100%">
+</p>
 
 **TL;DR.** LLM-based simulators can reproduce observable student actions while missing the reasoning behind them. INSIDE (Internal Student Dialogue) fine-tunes LLMs not only to act like students, but also to think like them, by generating internal dialogue grounded in Bloom's Taxonomy before producing the next student action in the programming education context. INSIDE improves simulation fidelity by better matching real student code generation and improves reasoning alignment, reaching up to 57.9% alignment compared to baselines.
 
