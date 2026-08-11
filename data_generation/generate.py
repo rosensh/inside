@@ -159,51 +159,35 @@ if args.index is not None:
         print(model_output.strip())
 
     elif script_args.model_type == "vllm":
-        _extra_body = {}
-
-        def process_example_vllm(example):
-            try:
-                response = completion(
-                    model=f"hosted_vllm/{script_args.model_id}",
-                    messages=[
-                        {"role": "system", "content": script_args.system_prompt},
-                        {"role": "user", "content": example["input"]}
-                    ],
-                    api_base=script_args.api_base,
-                    max_completion_tokens=script_args.max_new_tokens,
-                    temperature=script_args.temperature,
-                    top_p=script_args.top_p,
-                    top_k=script_args.top_k,
-                    min_p=script_args.min_p,
-                    repetition_penalty=getattr(script_args, "repetition_penalty", 1.0),
-                    stop=getattr(script_args, "stop", None),
-                    extra_body=_extra_body or None,
-                )
-                choice = response["choices"][0]["message"] if response and response.get("choices") else {}
-                reasoning = (choice.get("reasoning_content") or "").strip()
-                content = (choice.get("content") or "").strip()
-                output_text = f"<think>\n{reasoning}\n</think>\n\n{content}" if reasoning else content
-
-            except Exception as e:
-                print(f"Error: {e}")
-                output_text = f"ERRORED ({e})"
-
-            return {
-                **{k: v for k, v in example.items() if k not in ("input", "output")},
-                "input": example["input"],
-                "output_synthetic": output_text,
-                "output_gt": example["output"],
+        _extra_body = {
+            "chat_template_kwargs": {
+                "enable_thinking": getattr(script_args, "enable_thinking", False)
             }
+        }
+        if getattr(script_args, "stop", None):
+            _extra_body["include_stop_str_in_output"] = True
+            _extra_body["stop"] = script_args.stop
 
-        output_dir = os.path.dirname(os.path.abspath(script_args.output_data_path))
-        os.makedirs(output_dir, exist_ok=True)
-
-        with open(script_args.output_data_path, "a", encoding="utf-8") as f:
-            with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
-                for result in tqdm(executor.map(process_example_vllm, dataset), total=len(dataset)):
-                    f.write(json.dumps(result, ensure_ascii=False) + "\n")
-                    f.flush()
-
+        response = completion(
+            model=f"hosted_vllm/{script_args.model_id}",
+            messages=[
+                {"role": "system", "content": script_args.system_prompt},
+                {"role": "user", "content": sample["input"]}
+            ],
+            api_base=script_args.api_base,
+            max_completion_tokens=script_args.max_new_tokens,
+            temperature=script_args.temperature,
+            top_p=script_args.top_p,
+            top_k=script_args.top_k,
+            min_p=script_args.min_p,
+            extra_body=_extra_body or None,
+        )
+        choice = response["choices"][0]["message"] if response and response.get("choices") else {}
+        reasoning = (choice.get("reasoning_content") or "").strip()
+        content = (choice.get("content") or "").strip()
+        model_output = f"<think>\n{reasoning}\n</think>\n\n{content}" if reasoning else content
+        print("\n======== MODEL OUTPUT ========\n")
+        print(model_output.strip())
 
     exit(0)
 

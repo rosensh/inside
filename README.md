@@ -1,14 +1,25 @@
-# Internal Student Dialogue (INSIDE)
-
 <p align="center">
-  <img src="logo/inside-logo.jpg" alt="INSIDE logo" width="240">
+  <img src="logo/inside-logo.pdf" alt="INSIDE logo" width="240">
 </p>
 
-### Paper Title: INSIDE: LLM Student Simulators That Reason Behind Their Actions
-### Authors: Rose Niousha, Minwoo Kang, Narges Norouzi
-`{rose.n, minwoo_kang, norouzi}@berkeley.edu`  
-(Accepted at COLM 2026)
+<h1 align="center">INSIDE the Student's Mind</h1>
+<h3 align="center">Jointly Modeling Latent Reasoning and Action in LLM Student Simulators</h3>
 
+<p align="center">
+  Rose Niousha, Minwoo Kang, Narges Norouzi
+  <br>
+  Department of Electrical Engineering and Computer Sciences, UC Berkeley
+  <br>
+  <code>{rose.n, minwoo_kang, norouzi}@berkeley.edu</code>
+</p>
+
+<p align="center">
+  <a href="#citation"><img src="https://img.shields.io/badge/COLM-2026-b31b1b.svg" alt="COLM 2026"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="#start-here"><img src="https://img.shields.io/badge/Python-3.11-blue.svg" alt="Python 3.11"></a>
+</p>
+
+---
 
 **TL;DR.** LLM-based simulators can reproduce observable student actions while missing the reasoning behind them. INSIDE (Internal Student Dialogue) fine-tunes LLMs not only to act like students, but also to think like them, by generating internal dialogue grounded in Bloom's Taxonomy before producing the next student action in the programming education context. INSIDE improves simulation fidelity by better matching real student code generation and improves reasoning alignment, reaching up to 57.9% alignment compared to baselines.
 
@@ -64,8 +75,10 @@ Start from the synthetic examples:
 
 Each training row has:
 
-- `INPUT`: problem text, skeleton code, prior submissions, prior tutor feedback, and metadata
+- `INPUT`: problem text, skeleton code, prior submissions, prior tutor feedback, and metadata (`student_id`, `assignment_name`, `question_name`, `semester`)
 - `OUTPUT`: the next student submission
+
+`INPUT` metadata fields are flattened to top level during generation and are what the evaluation scripts group and look up rows by, so keep them in your own data. `semester` is only needed if you plan to run autograder scoring.
 
 For INSIDE training, `OUTPUT` starts with a think trace:
 
@@ -110,6 +123,8 @@ python fine_tuning/fine_tune.py \
 ```
 
 W&B and Hugging Face Hub uploads are off by default. Enable them explicitly with `--report_to wandb` or `--push_to_hub`.
+
+For `exp2`, training additionally logs `think_loss` and `code_loss` separately, split at the `</think>` boundary of each target, so you can watch the internal-dialogue and code portions of the objective independently. This is logging only; the backprop loss is the standard combined one.
 
 ## 4. Generate Outputs
 

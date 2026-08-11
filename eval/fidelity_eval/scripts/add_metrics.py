@@ -139,7 +139,6 @@ def extract_features(code: str):
 if __name__ == "__main__":
     file_list = args.file if args.file else os.listdir(INPUT_DIR)
     for filename in file_list:
-        # if not filename.endswith("_formatted.jsonl"):
         if not filename.endswith("_formatted.jsonl"):
             continue
 
@@ -163,33 +162,11 @@ if __name__ == "__main__":
         if target_questions:
             data = [row for row in data if row["question_name"] in target_questions]
 
-        # # Sample 15% of (student, question) streams per question
-        # import random
-        # random.seed(42)
-        # from collections import defaultdict
-        # streams = defaultdict(list)
-        # for row in data:
-        #     streams[(row["student_id"], row["question_name"])].append(row)
-        # streams_by_q = defaultdict(list)
-        # for (sid, qname), rows in streams.items():
-        #     streams_by_q[qname].append((sid, qname))
-        # data = []
-        # for qname, pairs in streams_by_q.items():
-        #     k = max(1, int(len(pairs) * 0.15))
-        #     sampled_pairs = set(random.sample(pairs, k))
-        #     for (sid, qn), rows in streams.items():
-        #         if (sid, qn) in sampled_pairs:
-        #             data.extend(rows)
-
-        # data = data[:10]
-
-
-
         results = []
 
         for row in tqdm(data, desc=filename):
             tc = test_class_map.get(row.get("question_name"), None)
-            if row["question_name"] == "Mint" or row.get("is_processed") is False:
+            if row.get("is_processed") is False:
                 results.append(row)
                 continue
 
@@ -200,8 +177,16 @@ if __name__ == "__main__":
                 tc = test_class_map.get(row["question_name"], None)
                 test_path = None
                 if TEST_FILES_DIR:
-                    test_file = f"{row['semester']}_{row['question_name']}.py"
-                    test_path = os.path.join(TEST_FILES_DIR, test_file)
+                    semester = row.get("semester")
+                    if semester is None:
+                        print(
+                            "Skipping autograder (no semester field):",
+                            f"file={filename}",
+                            f"question={row.get('question_name')}",
+                        )
+                    else:
+                        test_file = f"{semester}_{row['question_name']}.py"
+                        test_path = os.path.join(TEST_FILES_DIR, test_file)
 
                 for side in ["synthetic", "gt"]:
                     key = f"{side}_code_block"
