@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="#citation"><img src="https://img.shields.io/badge/COLM-2026-b31b1b.svg" alt="COLM 2026"></a>
+  <a href="https://arxiv.org/abs/2608.10492"><img src="https://img.shields.io/badge/COLM-2026-b31b1b.svg" alt="COLM 2026"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="#start-here"><img src="https://img.shields.io/badge/Python-3.11-blue.svg" alt="Python 3.11"></a>
 </p>
